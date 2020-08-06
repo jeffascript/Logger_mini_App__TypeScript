@@ -1,5 +1,5 @@
 "use strict";
-var person2 = {
+const person2 = {
     name: " Jeff",
     age: 30,
     hobbies: ["Sports", "Cooking"],
@@ -7,7 +7,7 @@ var person2 = {
 };
 person2.role.push("admin");
 person2.role[1] = 10;
-var person = {
+const person = {
     name: " Jeff",
     age: 30,
     hobbies: ["Sports", "Cooking"],
@@ -15,10 +15,9 @@ var person = {
 };
 person.role[1] = "visitor";
 person.role.push("admin");
-var favoriteActivities;
+let favoriteActivities;
 favoriteActivities = ["soccer", "BasketBall"];
-for (var _i = 0, _a = person.hobbies; _i < _a.length; _i++) {
-    var hobby = _a[_i];
+for (const hobby of person.hobbies) {
     console.log(hobby.toUpperCase());
 }
 var Role;
@@ -28,12 +27,12 @@ var Role;
     Role[Role["AUTHOR"] = 101] = "AUTHOR";
     Role["MANAGER"] = "Open position";
 })(Role || (Role = {}));
-var personNew = {
+const personNew = {
     name: "Jeff",
     age: 30,
     hobbies: ["Sports", "Cooking"],
     role: Role.AUTHOR,
 };
 console.log(personNew);
-var newArray;
+let newArray;
 newArray = [2, "stringingggg", true, 70971];

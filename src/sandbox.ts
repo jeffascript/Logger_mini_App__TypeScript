@@ -1,70 +1,195 @@
-const character = "mario";
+import { Invoice } from "./classes/Invoice.js";
+import { Payment } from "./classes/Payment.js";
+import { HasFormatter } from "./interfaces/HasFormatter.js";
+import { ListTemplate } from "./classes/ListTemplates.js";
 
-console.log(character);
+let docOne: HasFormatter;
 
-const inputs = document.querySelectorAll("input");
+let docTwo: HasFormatter;
 
-console.log(inputs);
+docOne = new Invoice("Gazelle", "blog design", 4000);
 
-inputs.forEach((input) => {
-  console.log(input);
-});
+docTwo = new Payment("Simon", "phone repair", 80);
 
-const circ = (diameter: number) => {
-  return diameter * Math.PI;
-};
+let docs: HasFormatter[] = [];
 
-console.log(circ(20));
+docs.push(docOne, docTwo);
 
-type OurArray = string | boolean | number;
+console.log(docs);
 
-let mixed: OurArray[]; //
-let mixed1: unknown[];
+//INTERFACES
 
-mixed = ["highidf", 1, 7867, true];
-
-mixed1 = ["highidf", 1, 7867, true];
-mixed1.push("reeperbahn");
-console.log(mixed1);
-
-let jeffPerson: {
+interface IsPerson {
   name: string;
   age: number;
-  color: string;
-} = {
+  speak: (a: string) => void; //Alternative way of setting a method in the interface
+  spend(a: number): number;
+}
+
+const me: IsPerson = {
   name: "Jeff",
   age: 30,
-  color: "black",
+  speak(text: string) {
+    //invoking  method in the object
+    console.log(text);
+    return; //optional
+  },
+  spend: (amount: number): number => {
+    //alternative for method in the object
+    console.log("I spent ", amount);
+    return amount;
+  },
 };
 
-type ArrayMatch = string | boolean | number;
+console.log(me, "me");
 
-enum Gender {
-  MALE = "Male",
-  FEMALE = "Female",
+const greetPerson = (person: IsPerson) => {
+  console.log("hello ", person.name);
+};
+
+greetPerson(me);
+
+//CLASSES
+
+class Invoice1 {
+  //  method 1:
+  //   readonly client: string;
+  //   private details: string;
+  //   public amount: number;
+
+  //   constructor(c: string, d: string, a: number) {
+  //     this.client = c;
+  //     this.details = d;
+  //     this.amount = a;
+  //   }
+
+  //Alternatively, method 2: include the public| private | readonly for below method to work
+
+  constructor(
+    readonly client: string,
+    private details: string,
+    public amount: number
+  ) {}
+
+  format = () => {
+    return `${this.client} owes €${this.amount} for ${this.details}`;
+  };
 }
-let jeff: {
-  name: string;
-  age: number;
-  color?: string;
-  skills: ArrayMatch[];
-  gender?: Gender;
-} = {
-  name: "Jeff",
-  age: 25,
-  color: "black",
-  skills: [],
+
+const invOne = new Invoice("John", "built an AI platform", 300);
+const invTwo = new Invoice("Maryline", "work on the new apartment", 600);
+
+let invoices: Invoice[] = [];
+
+invoices.push(invOne);
+invoices.push(invTwo);
+
+invOne.amount = 170;
+
+//invTwo.client = "Tobia"; // doesnt work cos it is a readonly
+
+console.log(invOne, invTwo);
+
+invoices.forEach((inv) => {
+  console.log(inv.client, inv.amount, inv.format()); // cannot access inv.details cos it is private
+});
+
+// const anchor = document.querySelector("a")!; //! showing that it is a valid syntax annd not empty
+
+// // if (anchor) {
+// //   console.log(anchor.href);
+// // }
+
+// console.log(anchor.href);
+
+const form1 = document.querySelector(".new-item-form") as HTMLFormElement;
+
+//console.log(form1.children);
+
+//inputs
+
+const type = document.querySelector("#type") as HTMLSelectElement;
+
+const fromTo = document.querySelector("#tofrom") as HTMLInputElement;
+
+const details = document.querySelector("#details") as HTMLInputElement;
+
+const amount = document.querySelector("#amount") as HTMLInputElement;
+
+//List template Instance
+
+const ul = document.querySelector("ul")!;
+const list = new ListTemplate(ul);
+
+form1.addEventListener("submit", (e: Event) => {
+  e.preventDefault();
+
+  let doc: HasFormatter;
+  if (type.value === "invoice") {
+    doc = new Invoice(fromTo.value, details.value, amount.valueAsNumber);
+  } else {
+    doc = new Payment(fromTo.value, details.value, amount.valueAsNumber);
+  }
+  console.log(doc);
+
+  list.render(doc, type.value, "end");
+
+  // console.log(type.value, fromTo.value, details.value, amount.valueAsNumber);
+}); //payment Jeff Money for  30000
+
+//GENERICS
+
+// const addUID = (obj: object) => {
+//   let uid = Math.floor(Math.random() * 100);
+//   return { ...obj, uid };
+// };
+
+//FIXES
+// const addUID = <T extends object>(obj: T) => { //first method
+//   let uid = Math.floor(Math.random() * 100);
+//   return { ...obj, uid };
+// };
+
+const addUID = <T extends { name: string; age: number }>(obj: T) => {
+  //2nd method
+  let uid = Math.floor(Math.random() * 100);
+  return { ...obj, uid };
 };
 
-jeff = {
-  name: "Jeff0",
-  age: 28,
-  gender: Gender.MALE,
-  skills: ["typeScript", 2, false],
+let doc1 = addUID({ name: "romeo", age: 35 });
+
+console.log(doc1.name); //works now cos of the T generic
+// let doc2 = addUID("huzdgiu") // would not work now cos of the  T that extends object
+
+let doc2 = addUID({ name: "hello", age: 2020 });
+
+//console.log(doc1.name); // error saying that name does not exist on the doc1 type
+
+//GENERICS WITH INTERFACES
+
+interface Resource<T> {
+  uid: number;
+  resourceName: string;
+  data: T;
+}
+
+const doc3: Resource<string> = {
+  uid: 10,
+  resourceName: "person",
+  // data: { name: "Parker" },
+  data: "Parker",
 };
 
-console.log(jeff.age);
+const doc4: Resource<object> = {
+  uid: 10,
+  resourceName: "person",
+  data: { name: "Parker" },
+};
 
-console.log((jeff.age = 30));
+const doc5: Resource<string[]> = {
+  uid: 10,
+  resourceName: "shoppingList",
+  data: ["Milk", "bread"],
+};
 
-console.log(jeff.gender);
+console.log(doc3, doc4, doc5);

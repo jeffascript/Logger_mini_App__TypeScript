@@ -1,26 +1,26 @@
 "use strict";
-var add = function (n1, n2) {
+const add = (n1, n2) => {
     return n1 + n2;
 };
-var printResult = function (num) {
+const printResult = (num) => {
     console.log("result is " + num);
 };
-var someValue;
+let someValue;
 printResult(add(5, 12));
-var combineValues;
+let combineValues;
 combineValues = add;
 combineValues = 5;
-var reWorkedCombineValues;
+let reWorkedCombineValues;
 reWorkedCombineValues = add;
 reWorkedCombineValues = printResult;
 console.log(reWorkedCombineValues(7, 7));
-var newCombinedValues;
+let newCombinedValues;
 newCombinedValues = add;
 console.log(newCombinedValues(8, 7));
-var addAndHandle = function (n1, n2, cb) {
-    var result = n1 + n2;
+const addAndHandle = (n1, n2, cb) => {
+    const result = n1 + n2;
     cb(result);
 };
-addAndHandle(10, 20, function (result) {
+addAndHandle(10, 20, (result) => {
     console.log(result);
 });

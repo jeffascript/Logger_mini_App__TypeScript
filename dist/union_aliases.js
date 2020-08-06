@@ -1,6 +1,6 @@
 "use strict";
-var combine = function (input1, input2) {
-    var result;
+const combine = (input1, input2) => {
+    let result;
     if (typeof input1 === "number" && typeof input2 === "number") {
         result = input1 + input2;
     }
@@ -9,12 +9,12 @@ var combine = function (input1, input2) {
     }
     return result;
 };
-var combinedAges = combine(30, 26);
-var combinedNames = combine("Jeff", "Emerald");
+const combinedAges = combine(30, 26);
+const combinedNames = combine("Jeff", "Emerald");
 console.log(combinedAges);
 console.log(combinedNames);
-var combineFirstMethod = function (input1, input2, resultConversion) {
-    var result;
+const combineFirstMethod = (input1, input2, resultConversion) => {
+    let result;
     if (typeof input1 === "number" && typeof input2 === "number") {
         result = input1 + input2;
     }
@@ -28,8 +28,8 @@ var combineFirstMethod = function (input1, input2, resultConversion) {
         return result.toString();
     }
 };
-var combine1 = function (input1, input2, resultConversion) {
-    var result;
+const combine1 = (input1, input2, resultConversion) => {
+    let result;
     if (typeof input1 === "number" && typeof input2 === "number") {
         result = input1 + input2;
     }
@@ -43,11 +43,11 @@ var combine1 = function (input1, input2, resultConversion) {
         return result.toString();
     }
 };
-var combinedStringAges = combine1("30", "26", "as-number");
-var combinedNames1 = combine1("Jeff", "Emerald", "as-text");
+const combinedStringAges = combine1("30", "26", "as-number");
+const combinedNames1 = combine1("Jeff", "Emerald", "as-text");
 console.log(combinedNames1);
-var combineWithAliases = function (input1, input2, resultConversion) {
-    var result;
+const combineWithAliases = (input1, input2, resultConversion) => {
+    let result;
     if (typeof input1 === "number" && typeof input2 === "number") {
         result = input1 + input2;
     }
@@ -61,6 +61,6 @@ var combineWithAliases = function (input1, input2, resultConversion) {
         return result.toString();
     }
 };
-var combinedStringAges1 = combineWithAliases("30", "26", "as-number");
-var combinedNames11 = combineWithAliases("Jeff", "Emerald", "as-text");
+const combinedStringAges1 = combineWithAliases("30", "26", "as-number");
+const combinedNames11 = combineWithAliases("Jeff", "Emerald", "as-text");
 console.log(combinedNames1);
