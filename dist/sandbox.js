@@ -54,12 +54,17 @@ const ul = document.querySelector("ul");
 const list = new ListTemplate(ul);
 form1.addEventListener("submit", (e) => {
     e.preventDefault();
+    let values = [
+        fromTo.value,
+        details.value,
+        amount.valueAsNumber,
+    ];
     let doc;
     if (type.value === "invoice") {
-        doc = new Invoice(fromTo.value, details.value, amount.valueAsNumber);
+        doc = new Invoice(...values);
     }
     else {
-        doc = new Payment(fromTo.value, details.value, amount.valueAsNumber);
+        doc = new Payment(...values);
     }
     console.log(doc);
     list.render(doc, type.value, "end");
@@ -87,3 +92,28 @@ const doc5 = {
     data: ["Milk", "bread"],
 };
 console.log(doc3, doc4, doc5);
+var ResourceType;
+(function (ResourceType) {
+    ResourceType[ResourceType["BOOK"] = 0] = "BOOK";
+    ResourceType[ResourceType["AUTHOR"] = 1] = "AUTHOR";
+    ResourceType[ResourceType["DIRECTOR"] = 2] = "DIRECTOR";
+    ResourceType[ResourceType["PERSON"] = 3] = "PERSON";
+})(ResourceType || (ResourceType = {}));
+const doc6 = {
+    uid: 10,
+    resourceType: ResourceType.AUTHOR,
+    data: { name: "Parker" },
+};
+const doc7 = {
+    uid: 4,
+    resourceType: ResourceType.BOOK,
+    data: { name: "Parker" },
+};
+console.log(doc6, doc7);
+let arr = ["ryu", 1, true];
+arr[0] = true;
+let tup = ["true", 40, true];
+let student;
+student = ["BabyFace", 298639];
+student.push("NewBabyFace", 30000);
+console.log(student);

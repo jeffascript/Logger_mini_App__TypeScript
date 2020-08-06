@@ -124,11 +124,21 @@ const list = new ListTemplate(ul);
 form1.addEventListener("submit", (e: Event) => {
   e.preventDefault();
 
+  //Using TUPLES to arrange the values for doc below
+  let values: [string, string, number] = [
+    fromTo.value,
+    details.value,
+    amount.valueAsNumber,
+  ];
+
   let doc: HasFormatter;
   if (type.value === "invoice") {
-    doc = new Invoice(fromTo.value, details.value, amount.valueAsNumber);
+    // doc = new Invoice(fromTo.value, details.value, amount.valueAsNumber); // since we converted to tuples, we assigned them to values
+
+    doc = new Invoice(...values);
   } else {
-    doc = new Payment(fromTo.value, details.value, amount.valueAsNumber);
+    // doc = new Payment(fromTo.value, details.value, amount.valueAsNumber);
+    doc = new Payment(...values);
   }
   console.log(doc);
 
@@ -193,3 +203,48 @@ const doc5: Resource<string[]> = {
 };
 
 console.log(doc3, doc4, doc5);
+
+//ENUMS
+
+enum ResourceType {
+  BOOK,
+  AUTHOR,
+  DIRECTOR,
+  PERSON,
+}
+
+interface ResourceForEnum<T> {
+  uid: number;
+  resourceType: ResourceType;
+  data: T;
+}
+
+const doc6: ResourceForEnum<object> = {
+  uid: 10,
+  resourceType: ResourceType.AUTHOR,
+  data: { name: "Parker" },
+};
+
+const doc7: ResourceForEnum<object> = {
+  uid: 4,
+  resourceType: ResourceType.BOOK,
+  data: { name: "Parker" },
+};
+
+console.log(doc6, doc7);
+
+// TUPLES ---> can use that for student  list
+
+let arr = ["ryu", 1, true];
+
+arr[0] = true;
+
+let tup: [string, number, boolean] = ["true", 40, true];
+
+let student: [string, number];
+
+student = ["BabyFace", 298639];
+
+student.push("NewBabyFace", 30000);
+
+console.log(student); // 4 of them will be there
